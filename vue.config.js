@@ -1,3 +1,4 @@
 module.exports = {
-    outputDir: 'src/main/resources/static'
+    outputDir: 'src/main/resources/static/app',
+    publicPath: '/app/'
 }
