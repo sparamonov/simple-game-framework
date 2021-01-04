@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import RoomsPage from './views/RoomsPage.vue'
-import MainPage from './views/MainPage.vue'
+import RoomsPage from '../views/pages/RoomsPage.vue'
+import MainPage from '../views/pages/MainPage.vue'
 
 Vue.use(Router)
 
