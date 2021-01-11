@@ -1,31 +1,47 @@
 package com.github.sparamonov.simplegameframework.core.web.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.github.sparamonov.simplegameframework.core.service.UserService;
+import com.github.sparamonov.simplegameframework.core.web.dto.RoomData;
+import com.github.sparamonov.simplegameframework.core.web.dto.UserData;
+import lombok.RequiredArgsConstructor;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.validation.Valid;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
+@RequiredArgsConstructor
 public class ApiController {
 
-    @GetMapping("/rooms")
-    public List<Map<String, String>> getRooms() {
-        List<Map<String, String>> rooms = new ArrayList<>();
-        Map<String, String> room1 = new HashMap<>();
-        room1.put("id", "1");
-        room1.put("name", "room1");
-        Map<String, String> room2 = new HashMap<>();
-        room2.put("id", "2");
-        room2.put("name", "room2");
-        rooms.add(room1);
-        rooms.add(room2);
-        return rooms;
+    private final UserService userService;
+
+    @PostMapping("/user/save")
+    public UserData saveUser(@RequestHeader(value = "x-user-id", required = false) UUID userId,
+                             @Valid @RequestBody UserData request) {
+
+        if (userId != null) {
+            throw new RuntimeException("Not implemented yet");
+        }
+        return UserData.of(userService.createUser(request.getName()));
     }
 
+    @GetMapping("/rooms")
+    public List<RoomData> getRooms(@RequestHeader("x-user-id") UUID userId) {
 
+        return userService.getUserRooms(userId).stream()
+                .map(RoomData::of)
+                .collect(Collectors.toList());
+    }
+
+    @PostMapping("/rooms/save")
+    public RoomData saveRoom(@RequestHeader("x-user-id") UUID userId, @Valid @RequestBody RoomData request) {
+
+        if (StringUtils.hasText(request.getId())) {
+            throw new RuntimeException("Not implemented yet");
+        }
+        return RoomData.of(userService.createRoom(userId, request.getName()));
+    }
 }
