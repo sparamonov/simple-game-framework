@@ -20,7 +20,9 @@ export default {
                 {{room}}
             </b-card-text>
 
-            <b-button href="#" variant="primary">Go to room</b-button>
+            <router-link :to="{ name: 'room', params: { roomId: room.id }}">
+                <b-button :href="href" variant="primary">Go to room</b-button>
+            </router-link>
         </b-card>
     </div>
 </template>

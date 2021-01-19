@@ -7,14 +7,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         user: {},
-        rooms: []
+        rooms: {}
     },
     mutations: {
         setUser(state, user) {
             state.user = user
         },
         addNewRoom(state, room) {
-            state.rooms.push(room)
+            Vue.set(state.rooms, room.id, room)
         }
     },
     actions: {
