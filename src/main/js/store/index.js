@@ -34,7 +34,11 @@ export default new Vuex.Store({
             let { data } = await api.getRooms()
             data.forEach(rec => {
                 commit('addNewRoom', rec)
-            });
+            })
+        },
+        async loadRoom({ commit }, roomId) {
+            let { data } = await api.getRoom(roomId)
+            commit('addNewRoom', data)
         }
     }
 })

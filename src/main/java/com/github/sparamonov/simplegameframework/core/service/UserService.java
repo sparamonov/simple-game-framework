@@ -34,6 +34,13 @@ public class UserService {
         return roomRepository.findAllByUser(getUser(userId));
     }
 
+    public Room getRoom(UUID userId, UUID roomId) {
+
+        return roomRepository.findById(roomId)
+                .filter(room -> room.getUser().getId().equals(userId))
+                .orElseThrow(NotFoundException::new);
+    }
+
     public Room createRoom(UUID userId, String name) {
 
         return roomRepository.save(Room.builder()

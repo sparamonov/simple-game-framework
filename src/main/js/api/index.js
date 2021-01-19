@@ -13,6 +13,9 @@ class Api {
     getRooms() {
         return axiosInstance().get('/rooms')
     }
+    getRoom(roomId) {
+        return axiosInstance().get('/room', {params: {id: roomId}})
+    }
 }
 
 export default new Api()
